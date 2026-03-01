@@ -178,7 +178,7 @@ async function generateSummaries(
         const hasData = issues.length || prs.length || releases.length;
         if (!hasData) {
           console.log(`  [${cfg.id}] No activity, skipping LLM call`);
-          return { config: cfg, issues, prs, releases, summary: "过去24小时无活动。" };
+          return { config: cfg, issues, prs, releases, summary: "Активности за 24 часа нет." };
         }
         console.log(`  [${cfg.id}] Calling LLM for summary...`);
         try {
@@ -186,7 +186,7 @@ async function generateSummaries(
           return { config: cfg, issues, prs, releases, summary };
         } catch (err) {
           console.error(`  [${cfg.id}] LLM call failed: ${err}`);
-          return { config: cfg, issues, prs, releases, summary: "⚠️ 摘要生成失败。" };
+          return { config: cfg, issues, prs, releases, summary: "⚠️ Ошибка генерации сводки." };
         }
       }),
     ),
@@ -195,14 +195,14 @@ async function generateSummaries(
       const hasData = issues.length || prs.length || releases.length;
       if (!hasData) {
         console.log(`  [openclaw] No activity, skipping LLM call`);
-        return "过去24小时无活动。";
+        return "Активности за 24 часа нет.";
       }
       console.log(`  [openclaw] Calling LLM for OpenClaw report...`);
       try {
         return await callLlm(buildPeerPrompt(cfg, issues, prs, releases, dateStr, 50, 30));
       } catch (err) {
         console.error(`  [openclaw] LLM call failed: ${err}`);
-        return "⚠️ 摘要生成失败。";
+        return "⚠️ Ошибка генерации сводки.";
       }
     })(),
     (async () => {
@@ -211,7 +211,7 @@ async function generateSummaries(
         return await callLlm(buildSkillsPrompt(skillsData.prs, skillsData.issues, dateStr));
       } catch (err) {
         console.error(`  [claude-code-skills] LLM call failed: ${err}`);
-        return "⚠️ Skills 摘要生成失败。";
+        return "⚠️ Ошибка генерации сводки Skills.";
       }
     })(),
     Promise.all(
@@ -219,7 +219,7 @@ async function generateSummaries(
         const hasData = issues.length || prs.length || releases.length;
         if (!hasData) {
           console.log(`  [${cfg.id}] No activity, skipping LLM call`);
-          return { config: cfg, issues, prs, releases, summary: "过去24小时无活动。" };
+          return { config: cfg, issues, prs, releases, summary: "Активности за 24 часа нет." };
         }
         console.log(`  [${cfg.id}] Calling LLM for peer summary...`);
         try {
@@ -232,13 +232,13 @@ async function generateSummaries(
           };
         } catch (err) {
           console.error(`  [${cfg.id}] LLM call failed: ${err}`);
-          return { config: cfg, issues, prs, releases, summary: "⚠️ 摘要生成失败。" };
+          return { config: cfg, issues, prs, releases, summary: "⚠️ Ошибка генерации сводки." };
         }
       }),
     ),
     (async () => {
       const hasData = trendingData.trendingRepos.length > 0 || trendingData.searchRepos.length > 0;
-      if (!hasData) return "⚠️ 今日趋势数据获取失败，无法生成报告。";
+      if (!hasData) return "⚠️ Данные трендов недоступны, отчёт не сгенерирован.";
       console.log("  [trending] Calling LLM for trending report...");
       try {
         return await callLlm(buildTrendingPrompt(trendingData, dateStr), 6144);
@@ -272,7 +272,7 @@ function buildCliReportContent(
     .map((d) => {
       const skillsSection =
         d.config.id === "claude-code"
-          ? `## Claude Code Skills 社区热点\n\n> 数据来源: [anthropics/skills](https://github.com/${CLAUDE_SKILLS_REPO})\n\n${skillsSummary}\n\n---\n\n`
+          ? `## Горячие Skills Claude Code\n\n> Источник: [anthropics/skills](https://github.com/${CLAUDE_SKILLS_REPO})\n\n${skillsSummary}\n\n---\n\n`
           : "";
       return [
         `<details>`,
@@ -286,14 +286,14 @@ function buildCliReportContent(
     .join("\n\n");
 
   return (
-    `# AI CLI 工具社区动态日报 ${dateStr}\n\n` +
-    `> 生成时间: ${utcStr} UTC | 覆盖工具: ${cliDigests.length} 个\n\n` +
+    `# Дайджест AI CLI-инструментов ${dateStr}\n\n` +
+    `> Сгенерировано: ${utcStr} UTC | Инструментов: ${cliDigests.length}\n\n` +
     `${repoLinks}\n\n` +
     `---\n\n` +
-    `## 横向对比\n\n` +
+    `## Сравнительный анализ\n\n` +
     comparison +
     `\n\n---\n\n` +
-    `## 各工具详细报告\n\n` +
+    `## Детальные отчёты по инструментам\n\n` +
     toolSections +
     footer
   );
@@ -328,17 +328,17 @@ function buildOpenclawReportContent(
     .join("\n\n");
 
   return (
-    `# OpenClaw 生态日报 ${dateStr}\n\n` +
-    `> Issues: ${issues.length} | PRs: ${prs.length} | 覆盖项目: ${1 + OPENCLAW_PEERS.length} 个 | 生成时间: ${utcStr} UTC\n\n` +
+    `# Дайджест экосистемы OpenClaw ${dateStr}\n\n` +
+    `> Issues: ${issues.length} | PRs: ${prs.length} | Проектов: ${1 + OPENCLAW_PEERS.length} | Сгенерировано: ${utcStr} UTC\n\n` +
     `${peersRepoLinks}\n\n` +
     `---\n\n` +
-    `## OpenClaw 项目深度报告\n\n` +
+    `## Детальный отчёт OpenClaw\n\n` +
     openclawSummary +
     `\n\n---\n\n` +
-    `## 横向生态对比\n\n` +
+    `## Сравнение экосистемы\n\n` +
     peersComparison +
     `\n\n---\n\n` +
-    `## 同赛道项目详细报告\n\n` +
+    `## Отчёты смежных проектов\n\n` +
     peerDetailSections +
     footer
   );
@@ -363,19 +363,19 @@ async function saveWebReport(
     try {
       const webSummary = await callLlm(buildWebReportPrompt(webResults, dateStr), 8192);
       const isFirstRun = webResults.some((r) => r.isFirstRun);
-      const mode = isFirstRun ? "首次全量" : "今日更新";
+      const mode = isFirstRun ? "первичный полный сбор" : "обновление за сегодня";
       const totalNew = webResults.reduce((sum, r) => sum + r.newItems.length, 0);
 
       const webContent =
-        `# AI 官方内容追踪报告 ${dateStr}\n\n` +
-        `> ${mode} | 新增内容: ${totalNew} 篇 | 生成时间: ${utcStr} UTC\n\n` +
-        `数据来源:\n` +
+        `# Отчёт официального AI-контента ${dateStr}\n\n` +
+        `> ${mode} | новых материалов: ${totalNew} | сгенерировано: ${utcStr} UTC\n\n` +
+        `Источники данных:\n` +
         `- Anthropic: [anthropic.com](https://www.anthropic.com) — ` +
-        `新增 ${webResults.find((r) => r.site === "anthropic")?.newItems.length ?? 0} 篇` +
-        `（sitemap 共 ${webResults.find((r) => r.site === "anthropic")?.totalDiscovered ?? 0} 条）\n` +
+        `новых: ${webResults.find((r) => r.site === "anthropic")?.newItems.length ?? 0}` +
+        ` (sitemap: ${webResults.find((r) => r.site === "anthropic")?.totalDiscovered ?? 0} URL)\n` +
         `- OpenAI: [openai.com](https://openai.com) — ` +
-        `新增 ${webResults.find((r) => r.site === "openai")?.newItems.length ?? 0} 篇` +
-        `（sitemap 共 ${webResults.find((r) => r.site === "openai")?.totalDiscovered ?? 0} 条）\n\n` +
+        `новых: ${webResults.find((r) => r.site === "openai")?.newItems.length ?? 0}` +
+        ` (sitemap: ${webResults.find((r) => r.site === "openai")?.totalDiscovered ?? 0} URL)\n\n` +
         `---\n\n` +
         webSummary +
         footer;
@@ -384,7 +384,7 @@ async function saveWebReport(
 
       if (digestRepo) {
         const webUrl = await createGitHubIssue(
-          `🌐 AI 官方内容追踪报告 ${dateStr}${isFirstRun ? "（首次全量）" : ""}`,
+          `🌐 AI официальный контент ${dateStr}${isFirstRun ? " (первый запуск)" : ""}`,
           webContent,
           "web",
         );
@@ -416,8 +416,8 @@ async function saveTrendingReport(
   }
 
   const trendingContent =
-    `# AI 开源趋势日报 ${dateStr}\n\n` +
-    `> 数据来源: GitHub Trending + GitHub Search API | 生成时间: ${utcStr} UTC\n\n` +
+    `# Дайджест трендов AI open-source ${dateStr}\n\n` +
+    `> Источник: GitHub Trending + GitHub Search API | Сгенерировано: ${utcStr} UTC\n\n` +
     `---\n\n` +
     trendingSummary +
     footer;
@@ -425,7 +425,7 @@ async function saveTrendingReport(
   console.log(`  Saved ${saveFile(trendingContent, dateStr, "ai-trending.md")}`);
 
   if (digestRepo) {
-    const trendingUrl = await createGitHubIssue(`📈 AI 开源趋势日报 ${dateStr}`, trendingContent, "trending");
+    const trendingUrl = await createGitHubIssue(`📈 AI тренды open-source ${dateStr}`, trendingContent, "trending");
     console.log(`  Created trending issue: ${trendingUrl}`);
   }
 }
@@ -497,11 +497,11 @@ async function main(): Promise<void> {
 
   // 5. Create GitHub issues for CLI + OpenClaw
   if (digestRepo) {
-    const cliUrl = await createGitHubIssue(`📊 AI CLI 工具社区动态日报 ${dateStr}`, digestContent, "digest");
+    const cliUrl = await createGitHubIssue(`📊 AI CLI дайджест ${dateStr}`, digestContent, "digest");
     console.log(`  Created CLI issue: ${cliUrl}`);
 
     const openclawUrl = await createGitHubIssue(
-      `🦞 OpenClaw 生态日报 ${dateStr}`,
+      `🦞 OpenClaw дайджест ${dateStr}`,
       openclawContent,
       "openclaw",
     );
