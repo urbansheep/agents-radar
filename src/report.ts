@@ -70,5 +70,5 @@ export function saveFile(content: string, ...segments: string[]): string {
 
 export function autoGenFooter(): string {
   const digestRepo = process.env["DIGEST_REPO"] ?? "";
-  return digestRepo ? `\n\n---\n*本日报由 [agents-radar](https://github.com/${digestRepo}) 自动生成。*` : "";
+  return digestRepo ? `\n\n---\n*Дайджест автоматически создан [agents-radar](https://github.com/${digestRepo}).*` : "";
 }

@@ -244,7 +244,7 @@ async function generateSummaries(
         return await callLlm(buildTrendingPrompt(trendingData, dateStr), 6144);
       } catch (err) {
         console.error(`  [trending] LLM call failed: ${err}`);
-        return "⚠️ 趋势报告生成失败。";
+        return "⚠️ Ошибка генерации отчёта трендов.";
       }
     })(),
   ]);
