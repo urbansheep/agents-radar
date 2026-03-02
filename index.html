@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -214,7 +214,7 @@
   <div id="body">
     <div id="sidebar">
       <div id="mob-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
-        ☰ &nbsp;选择报告
+        ☰ &nbsp;Отчёты
       </div>
       <div class="side-label">REPORTS</div>
       <div id="nav"></div>
@@ -222,7 +222,7 @@
 
     <div id="cwrap">
       <div id="content">
-        <div class="msg"><div class="msg-icon">📡</div><div>正在加载…</div></div>
+        <div class="msg"><div class="msg-icon">📡</div><div>Загрузка…</div></div>
       </div>
     </div>
   </div>
@@ -247,10 +247,10 @@ function renderMarkdown(raw) {
 }
 
 const LABELS = {
-  'ai-cli':      'AI CLI 工具',
-  'ai-agents':   'AI Agents 生态',
-  'ai-web':      '官网动态',
-  'ai-trending': 'GitHub 趋势',
+  'ai-cli':      'AI CLI инструменты',
+  'ai-agents':   'Экосистема AI Agents',
+  'ai-web':      'Официальный контент',
+  'ai-trending': 'GitHub тренды',
 };
 
 // ── Theme ──
@@ -300,7 +300,7 @@ async function loadReport(date, report, push = true) {
   document.getElementById('sidebar').classList.remove('open');
 
   const cwrap = document.getElementById('cwrap');
-  setContent('<div class="msg"><div class="msg-icon">⏳</div><div>Loading…</div></div>');
+  setContent('<div class="msg"><div class="msg-icon">⏳</div><div>Загрузка…</div></div>');
   cwrap.scrollTop = 0;
 
   try {
@@ -310,7 +310,7 @@ async function loadReport(date, report, push = true) {
     const safe = renderMarkdown(raw);
     setContent(`<div class="md fade">${safe}</div>`);
   } catch (e) {
-    setContent(`<div class="msg"><div class="msg-icon">⚠️</div><div>加载失败：${e.message}</div></div>`);
+    setContent(`<div class="msg"><div class="msg-icon">⚠️</div><div>Ошибка загрузки: ${e.message}</div></div>`);
   }
 }
 
@@ -374,7 +374,7 @@ window.addEventListener('popstate', () => {
   } catch (e) {
     document.getElementById('nav').innerHTML =
       '<div class="msg" style="height:80px;font-size:10px">⚠️ ' + e.message + '</div>';
-    setContent('<div class="msg"><div class="msg-icon">📡</div><div>无法加载 manifest.json</div></div>');
+    setContent('<div class="msg"><div class="msg-icon">📡</div><div>Не удалось загрузить manifest.json</div></div>');
   }
 })();
 </script>
