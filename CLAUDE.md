@@ -33,6 +33,14 @@ The pipeline runs in four sequential phases, each implemented as a named async f
 3. **Comparisons** — two LLM calls: cross-tool CLI comparison and OpenClaw cross-ecosystem comparison.
 4. **Save phase** — `buildCliReportContent` / `buildOpenclawReportContent` build Markdown strings; `saveWebReport` / `saveTrendingReport` call LLM + write file + create GitHub Issue.
 
+### Automated Workflow (GitHub Actions)
+
+The daily digest generation is fully automated via `.github/workflows/daily-digest.yml`:
+- **Scheduled:** Every day at 00:00 UTC (08:00 CST)
+- **Post-Generation:** Commits and pushes all changes to GitHub
+- **GitHub Pages Integration:** Automatic rebuild and deployment after successful push
+- See **[WORKFLOW.md](./WORKFLOW.md)** for complete documentation on workflow configuration, maintenance, and troubleshooting.
+
 ## Source files
 
 | File | Responsibility |

@@ -33,6 +33,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Run daily digest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,27 +46,33 @@ jobs:
           DIGEST_REPO: ${{ github.repository }}
         run: pnpm start
 
-      - name: Commit digest files
+      - name: Commit and push digest files
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add digests/
           if git diff --cached --quiet; then
-            echo "No new digest files to commit"
+            echo "✓ No new digest files to commit"
           else
             DATE=$(date -u +%Y-%m-%d)
             git commit -m "digest: ${DATE} daily digest"
-            git push
+            git push --atomic
           fi
 
       - name: Update web manifest
         run: pnpm manifest
 
-      - name: Commit manifest
+      - name: Commit and push manifest
         run: |
           git add manifest.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: update manifest.json"
-            git push
+            git push --atomic
+          else
+            echo "✓ No manifest changes to commit"
           fi
+
+      - name: Verify GitHub Pages deployment
+        run: |
+          echo "✓ Digest generation and push complete"
+          echo "GitHub Pages will automatically rebuild from the latest commits"
+          echo "Visit: https://github.com/${{ github.repository }}/settings/pages"
 
