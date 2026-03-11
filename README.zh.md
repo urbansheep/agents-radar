@@ -14,20 +14,11 @@
 
 ### AI CLI 工具（GitHub）
 
-| 工具 | 仓库 |
-|------|------|
-| Claude Code | [anthropics/claude-code](https://github.com/anthropics/claude-code) |
-| OpenAI Codex | [openai/codex](https://github.com/openai/codex) |
-| Gemini CLI | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) |
-| Kimi Code CLI | [MoonshotAI/kimi-cli](https://github.com/MoonshotAI/kimi-cli) |
-| OpenCode | [anomalyco/opencode](https://github.com/anomalyco/opencode) |
-| Qwen Code | [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code) |
+[anthropics/claude-code](https://github.com/anthropics/claude-code) · [openai/codex](https://github.com/openai/codex) · [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) · [MoonshotAI/kimi-cli](https://github.com/MoonshotAI/kimi-cli) · [anomalyco/opencode](https://github.com/anomalyco/opencode) · [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code)
 
 ### Claude Code Skills（GitHub）
 
-| 来源 | 仓库 |
-|------|------|
-| Claude Code Skills | [anthropics/skills](https://github.com/anthropics/skills) |
+[anthropics/skills](https://github.com/anthropics/skills)
 
 PR 和 Issue 不设时间过滤，按社区热度（评论数）排序，报告始终反映当前最活跃的 Skills 讨论，而非仅看最新内容。
 
@@ -35,18 +26,7 @@ PR 和 Issue 不设时间过滤，按社区热度（评论数）排序，报告�
 
 OpenClaw 作为重点追踪项目，同时横向对比 9 个同赛道项目，覆盖个人 AI 助手 / 自主 Agent 方向。
 
-| 项目 | 仓库 | Stars |
-|------|------|-------|
-| OpenClaw | [openclaw/openclaw](https://github.com/openclaw/openclaw) | — |
-| Zeroclaw | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | 19.6k |
-| EasyClaw | [gaoyangz77/easyclaw](https://github.com/gaoyangz77/easyclaw) | 87 |
-| LobsterAI | [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI) | 2.6k |
-| ZeptoClaw | [qhkm/zeptoclaw](https://github.com/qhkm/zeptoclaw) | 372 |
-| NanoBot | [HKUDS/nanobot](https://github.com/HKUDS/nanobot) | 25.5k |
-| PicoClaw | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | 20.2k |
-| NanoClaw | [qwibitai/nanoclaw](https://github.com/qwibitai/nanoclaw) | 15k |
-| IronClaw | [nearai/ironclaw](https://github.com/nearai/ironclaw) | 3.5k |
-| TinyClaw | [TinyAGI/tinyclaw](https://github.com/TinyAGI/tinyclaw) | 2.7k |
+[openclaw/openclaw](https://github.com/openclaw/openclaw) · [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) · [gaoyangz77/easyclaw](https://github.com/gaoyangz77/easyclaw) · [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI) · [qhkm/zeptoclaw](https://github.com/qhkm/zeptoclaw) · [HKUDS/nanobot](https://github.com/HKUDS/nanobot) · [sipeed/picoclaw](https://github.com/sipeed/picoclaw) · [qwibitai/nanoclaw](https://github.com/qwibitai/nanoclaw) · [nearai/ironclaw](https://github.com/nearai/ironclaw) · [TinyAGI/tinyclaw](https://github.com/TinyAGI/tinyclaw)
 
 ### GitHub AI 趋势热榜
 
