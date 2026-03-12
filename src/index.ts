@@ -28,7 +28,7 @@ import {
   buildWebReportPrompt,
   buildTrendingPrompt,
 } from "./prompts.ts";
-import { callLlm, saveFile, autoGenFooter } from "./report.ts";
+import { callLlm, saveFile, autoGenFooter, logTokenSummary } from "./report.ts";
 import { loadWebState, saveWebState, fetchSiteContent, type WebFetchResult, type WebState } from "./web.ts";
 import { fetchTrendingData, type TrendingData } from "./trending.ts";
 
@@ -264,9 +264,10 @@ function buildCliReportContent(
   dateStr: string,
   footer: string,
 ): string {
-  const repoLinks =
-    cliDigests.map((d) => `- [${d.config.name}](https://github.com/${d.config.repo})`).join("\n") +
-    `\n- [Claude Code Skills](https://github.com/${CLAUDE_SKILLS_REPO})`;
+  const repoLinks = [
+    ...cliDigests.map((d) => `[${d.config.name}](https://github.com/${d.config.repo})`),
+    `[Claude Code Skills](https://github.com/${CLAUDE_SKILLS_REPO})`,
+  ].join(" · ");
 
   const toolSections = cliDigests
     .map((d) => {
@@ -310,9 +311,10 @@ function buildOpenclawReportContent(
 ): string {
   const { issues, prs } = fetchedOpenclaw;
 
-  const peersRepoLinks =
-    `- [OpenClaw](https://github.com/${OPENCLAW.repo})\n` +
-    OPENCLAW_PEERS.map((p) => `- [${p.name}](https://github.com/${p.repo})`).join("\n");
+  const peersRepoLinks = [
+    `[OpenClaw](https://github.com/${OPENCLAW.repo})`,
+    ...OPENCLAW_PEERS.map((p) => `[${p.name}](https://github.com/${p.repo})`),
+  ].join(" · ");
 
   const peerDetailSections = peerDigests
     .map((d) =>
@@ -508,6 +510,7 @@ async function main(): Promise<void> {
     console.log(`  Created OpenClaw issue: ${openclawUrl}`);
   }
 
+  logTokenSummary();
   console.log("Done!");
 }
 

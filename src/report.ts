@@ -36,6 +36,22 @@ function releaseSlot(): void {
 }
 
 // ---------------------------------------------------------------------------
+// Token usage tracking
+// ---------------------------------------------------------------------------
+
+const tokenUsage = { input: 0, output: 0, calls: 0 };
+
+export function getTokenUsage() {
+  return { ...tokenUsage };
+}
+
+export function logTokenSummary(): void {
+  console.log(
+    `\n📊 Token usage: ${tokenUsage.calls} LLM calls | input: ${tokenUsage.input.toLocaleString()} | output: ${tokenUsage.output.toLocaleString()} | total: ${(tokenUsage.input + tokenUsage.output).toLocaleString()}`,
+  );
+}
+
+// ---------------------------------------------------------------------------
 // LLM
 // ---------------------------------------------------------------------------
 
@@ -51,6 +67,9 @@ export async function callLlm(prompt: string, maxTokens = 4096): Promise<string>
     });
     const block = message.content[0];
     if (block?.type !== "text") throw new Error("Unexpected response type from LLM");
+    tokenUsage.input += message.usage.input_tokens;
+    tokenUsage.output += message.usage.output_tokens;
+    tokenUsage.calls += 1;
     return block.text;
   } finally {
     releaseSlot();
