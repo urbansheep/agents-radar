@@ -9,6 +9,8 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 jobs:
   digest:
@@ -70,9 +72,20 @@ jobs:
             echo "✓ No manifest changes to commit"
           fi
 
-      - name: Verify GitHub Pages deployment
-        run: |
-          echo "✓ Digest generation and push complete"
-          echo "GitHub Pages will automatically rebuild from the latest commits"
-          echo "Visit: https://github.com/${{ github.repository }}/settings/pages"
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: digest
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 

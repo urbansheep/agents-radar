@@ -2,13 +2,7 @@
 
 > Сгенерировано: 2026-03-11 08:36 UTC | Инструментов: 6
 
-- [Claude Code](https://github.com/anthropics/claude-code)
-- [OpenAI Codex](https://github.com/openai/codex)
-- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
-- [Kimi Code CLI](https://github.com/MoonshotAI/kimi-cli)
-- [OpenCode](https://github.com/anomalyco/opencode)
-- [Qwen Code](https://github.com/QwenLM/qwen-code)
-- [Claude Code Skills](https://github.com/anthropics/skills)
+[Claude Code](https://github.com/anthropics/claude-code) · [OpenAI Codex](https://github.com/openai/codex) · [Gemini CLI](https://github.com/google-gemini/gemini-cli) · [Kimi Code CLI](https://github.com/MoonshotAI/kimi-cli) · [OpenCode](https://github.com/anomalyco/opencode) · [Qwen Code](https://github.com/QwenLM/qwen-code) · [Claude Code Skills](https://github.com/anthropics/skills)
 
 ---
 
